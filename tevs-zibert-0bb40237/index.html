@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tevs Zibert — DRS Owner Portal</title>
+<style>
+:root { --ink:#1a2333; --mut:#64748b; --line:#e2e8f0; --bg:#f6f8fb; --card:#fff;
+  --brand:#1d4ed8; --pos:#059669; --neg:#dc2626; }
+* { box-sizing:border-box; }
+body { margin:0; font:15px/1.55 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink); background:var(--bg); }
+.wrap { max-width:960px; margin:0 auto; padding:28px 20px 60px; }
+header h1 { margin:0 0 2px; font-size:26px; }
+header .sub { color:var(--mut); margin-bottom:18px; }
+.note { border-radius:10px; padding:12px 16px; margin:14px 0; font-size:14px; }
+.note.amber { background:#fef3c7; border:1px solid #f59e0b; }
+.note.blue { background:#dbeafe; border:1px solid #3b82f6; }
+section.vehicle { background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:22px 24px; margin:22px 0; box-shadow:0 1px 3px rgba(16,24,40,.06); }
+.vname { font-size:20px; font-weight:700; }
+.vmeta { color:var(--mut); font-size:13px; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin:18px 0; }
+.kpi { background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+.klabel { font-size:12px; color:var(--mut); text-transform:uppercase; letter-spacing:.04em; }
+.kval { font-size:22px; font-weight:700; margin-top:2px; }
+.ksub { font-size:12px; color:var(--mut); }
+h2 { font-size:16px; margin:26px 0 8px; }
+table { width:100%; border-collapse:collapse; font-size:14px; }
+th,td { padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; }
+th { font-size:12px; color:var(--mut); text-transform:uppercase; letter-spacing:.03em; }
+td.r, th.r { text-align:right; }
+tr.total td { font-weight:700; border-top:2px solid var(--ink); }
+.pos { color:var(--pos); } .neg { color:var(--neg); }
+.muted { color:var(--mut); }
+.fine { font-size:12px; color:var(--mut); }
+.calwrap { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+.cal { border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+.calhead { background:var(--ink); color:#fff; text-align:center; padding:6px; font-weight:600; font-size:14px; }
+.calgrid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; padding:6px; }
+.dow { font-size:10px; color:var(--mut); text-align:center; }
+.day { aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:12px;
+  border:1px solid transparent; border-radius:6px; }
+.day.booked { font-weight:700; }
+.day.today { outline:2px solid var(--brand); }
+.triplegend { margin-top:12px; display:flex; flex-wrap:wrap; gap:8px; }
+.chip { border:1px solid; border-radius:999px; padding:4px 12px; font-size:13px; background:#fff; }
+.dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+footer { color:var(--mut); font-size:12px; margin-top:26px; text-align:center; }
+@media print { body { background:#fff; } section.vehicle { box-shadow:none; } }
+</style></head><body><div class="wrap">
+<header><h1>Tevs Zibert</h1>
+<div class="sub">DIA RideSource · Owner Portal · generated 7/31/2026</div></header>
+<div class="note amber"><b>Manager's note:</b> Welcome to the Owner Portal! This is a work in
+progress, but this is a nice starter. My goal is to have this automatically update daily.</div>
+
+<section class="vehicle">
+  <div class="vcard">
+    <div><div class="vname">BMW 3 Series 2017</div>
+    <div class="vmeta">VIN WBA8D9C58HA003802 &nbsp;·&nbsp; Revenue split 70% owner / 30% DRS</div></div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="klabel">Current statement (7/2026)</div>
+      <div class="kval ">$342.81</div></div>
+    <div class="kpi"><div class="klabel">Revenue since 6/2026</div><div class="kval">$1,607.77</div></div>
+    <div class="kpi"><div class="klabel">Upcoming trips</div><div class="kval">5</div>
+      <div class="ksub">$1,315.66 revenue subject to split</div></div>
+  </div>
+  <h2>Payout Statements</h2>
+  <div class="note blue"><b>Notes:</b><br>
+  If expenses exceed the payout amount, an invoice will come via email. Negative balances will
+  no longer roll over.<br>
+  Outstanding invoices (vendors, insurance, etc.) must be paid before receiving monthly payouts.</div>
+  <table><thead><tr><th>Month</th><th class="r">Days</th><th class="r">Revenue</th><th class="r">Mgmt Fee</th><th class="r">Adjustments</th><th class="r">Operating Expenses</th><th class="r">Owner Payout</th></tr></thead><tbody><tr><td>6/2026</td><td class='r'>16</td><td class='r'>$920.18</td><td class='r'>$276.05</td><td class='r'>$0.00</td><td class='r'>$136.63</td><td class="r pos"><b>$507.50</b></td></tr><tr><td>7/2026</td><td class='r'>0</td><td class='r'>$687.59</td><td class='r'>$206.28</td><td class='r'>$0.00</td><td class='r'>$138.50</td><td class="r pos"><b>$342.81</b></td></tr></tbody></table>
+  <h2>Expenses</h2>
+  <table><thead><tr><th>Month</th><th>Vendor</th><th>Description</th><th class="r">Amount</th></tr></thead><tbody><tr><td>6/2026</td><td>Bouncie</td><td>Tracking Subscription</td><td class='r'>$10.00</td></tr><tr><td>6/2026</td><td>DIA Ridesource</td><td>Positive Balance Carryover from June</td><td class='r'><span class="pos">$159.37 credit</span></td></tr><tr><td>6/2026</td><td>Giddy Up</td><td>Airport Cleaning</td><td class='r'>$150.00</td></tr><tr><td>6/2026</td><td>Maintenance/Repairs</td><td>Battery Installation Paypal Invoice ($150)</td><td class='r'>$0.00</td></tr><tr><td>6/2026</td><td>Maintenance/Repairs</td><td>New Battery via Paypal Invoice ($199)</td><td class='r'>$0.00</td></tr><tr><td>6/2026</td><td>Park My Share</td><td>Airport Parking</td><td class='r'>$136.00</td></tr><tr><td>7/2026</td><td>Bouncie</td><td>Tracking Subscription</td><td class='r'>$10.00</td></tr><tr><td>7/2026</td><td>DIA Ridesource</td><td>Rollover from June</td><td class='r'>$0.00</td></tr><tr><td>7/2026</td><td>DIA Ridesource</td><td>Carry Over from June Negative Balance</td><td class='r'><span class="pos">$157.50 credit</span></td></tr><tr><td>7/2026</td><td>Giddy Up</td><td>Cleaning 150</td><td class='r'>$150.00</td></tr><tr><td>7/2026</td><td>Park My Share</td><td>Monthly Unlimited Parking</td><td class='r'>$136.00</td></tr><tr><td>7/2026</td><td>Tint Insurance</td><td>Tint Insurance via Paypal Invoice $119)</td><td class='r'>$0.00</td></tr><tr class='total'><td colspan='3'>Total deductions</td><td class='r'>$592.00</td></tr><tr class='total'><td colspan='3'>Total credits</td><td class='r pos'>$316.87</td></tr></tbody></table>
+  <h2>Upcoming Bookings</h2>
+  <div class="calwrap"><div class="cal"><div class="calhead">July 2026</div><div class="calgrid"><div class="dow">Su</div><div class="dow">Mo</div><div class="dow">Tu</div><div class="dow">We</div><div class="dow">Th</div><div class="dow">Fr</div><div class="dow">Sa</div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day" style="">1</div><div class="day" style="">2</div><div class="day" style="">3</div><div class="day" style="">4</div><div class="day" style="">5</div><div class="day" style="">6</div><div class="day" style="">7</div><div class="day" style="">8</div><div class="day" style="">9</div><div class="day" style="">10</div><div class="day" style="">11</div><div class="day" style="">12</div><div class="day" style="">13</div><div class="day" style="">14</div><div class="day" style="">15</div><div class="day" style="">16</div><div class="day" style="">17</div><div class="day" style="">18</div><div class="day" style="">19</div><div class="day" style="">20</div><div class="day" style="">21</div><div class="day" style="">22</div><div class="day" style="">23</div><div class="day" style="">24</div><div class="day" style="">25</div><div class="day booked" style="background:#2563eb22;border-color:#2563eb">26</div><div class="day booked" style="background:#2563eb22;border-color:#2563eb">27</div><div class="day booked" style="background:#2563eb22;border-color:#2563eb">28</div><div class="day booked" style="background:#2563eb22;border-color:#2563eb">29</div><div class="day booked" style="background:#2563eb22;border-color:#2563eb">30</div><div class="day booked today" style="background:#2563eb22;border-color:#2563eb">31</div></div></div><div class="cal"><div class="calhead">August 2026</div><div class="calgrid"><div class="dow">Su</div><div class="dow">Mo</div><div class="dow">Tu</div><div class="dow">We</div><div class="dow">Th</div><div class="dow">Fr</div><div class="dow">Sa</div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day booked" style="background:#2563eb22;border-color:#2563eb">1</div><div class="day" style="">2</div><div class="day" style="">3</div><div class="day" style="">4</div><div class="day booked" style="background:#05966922;border-color:#059669">5</div><div class="day booked" style="background:#05966922;border-color:#059669">6</div><div class="day booked" style="background:#05966922;border-color:#059669">7</div><div class="day booked" style="background:#05966922;border-color:#059669">8</div><div class="day booked" style="background:#05966922;border-color:#059669">9</div><div class="day booked" style="background:#05966922;border-color:#059669">10</div><div class="day booked" style="background:#05966922;border-color:#059669">11</div><div class="day booked" style="background:#d9770622;border-color:#d97706">12</div><div class="day booked" style="background:#d9770622;border-color:#d97706">13</div><div class="day booked" style="background:#d9770622;border-color:#d97706">14</div><div class="day booked" style="background:#d9770622;border-color:#d97706">15</div><div class="day booked" style="background:#7c3aed22;border-color:#7c3aed">16</div><div class="day booked" style="background:#7c3aed22;border-color:#7c3aed">17</div><div class="day booked" style="background:#7c3aed22;border-color:#7c3aed">18</div><div class="day" style="">19</div><div class="day" style="">20</div><div class="day booked" style="background:#dc262622;border-color:#dc2626">21</div><div class="day booked" style="background:#dc262622;border-color:#dc2626">22</div><div class="day booked" style="background:#dc262622;border-color:#dc2626">23</div><div class="day booked" style="background:#dc262622;border-color:#dc2626">24</div><div class="day" style="">25</div><div class="day" style="">26</div><div class="day" style="">27</div><div class="day" style="">28</div><div class="day" style="">29</div><div class="day" style="">30</div><div class="day" style="">31</div></div></div></div><div class="triplegend"><span class="chip" style="border-color:#2563eb"><span class="dot" style="background:#2563eb"></span>Cooper M. · 7/26–8/1 · <b>$444.55</b> revenue subject to split</span><span class="chip" style="border-color:#059669"><span class="dot" style="background:#059669"></span>Neil B. · 8/5–8/11 · <b>$370.69</b> revenue subject to split</span><span class="chip" style="border-color:#d97706"><span class="dot" style="background:#d97706"></span>Melissa W. · 8/12–8/15 · <b>$157.14</b> revenue subject to split</span><span class="chip" style="border-color:#7c3aed"><span class="dot" style="background:#7c3aed"></span>Viviane Couto M. · 8/16–8/18 · <b>$142.21</b> revenue subject to split</span><span class="chip" style="border-color:#dc2626"><span class="dot" style="background:#dc2626"></span>Praveen V. · 8/21–8/24 · <b>$201.07</b> revenue subject to split</span></div>
+</section>
+<footer>DIA RideSource, LLC · Questions? diaridesource@gmail.com</footer>
+</div></body></html>
