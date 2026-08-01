@@ -1,0 +1,42 @@
+name: Update owner portals
+
+on:
+  schedule:
+    - cron: '0 13 * * *'   # daily, 13:00 UTC = 7:00 AM Denver (during daylight time)
+  workflow_dispatch: {}     # adds a "Run workflow" button for manual runs
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openpyxl
+
+      - name: Download Turo Master sheet
+        run: >
+          curl -sSL -o turo.xlsx
+          "https://docs.google.com/spreadsheets/d/19iwi1OhIzDTAhKhHjaPeQzWTZPVMaIiB2cy4DkMaO38/export?format=xlsx"
+
+      - name: Rebuild changed portals
+        run: python3 build_all.py
+
+      - name: Commit and push if anything changed
+        run: |
+          rm -f turo.xlsx
+          git config user.name  "portal-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && echo "No changes today." && exit 0
+          git commit -m "Auto-update owner portals ($(date -u +%Y-%m-%d))"
+          git push
