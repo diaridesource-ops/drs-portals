@@ -42,6 +42,18 @@ for owner, info in new_state.items():
         f.write(html)
     changed.append(owner)
 
+# Management statement (internal page at the _mgmt slug): regenerate whenever
+# any owner's data changed, or if the page doesn't exist yet.
+mgmt_slug = hosting.get('_mgmt')
+if mgmt_slug:
+    mgmt_path = os.path.join(mgmt_slug, 'index.html')
+    if changed or not os.path.exists(mgmt_path):
+        import mgmt_statement
+        os.makedirs(mgmt_slug, exist_ok=True)
+        with open(mgmt_path, 'w') as f:
+            f.write(mgmt_statement.render_mgmt(today))
+        print('management statement updated')
+
 with open('state.json', 'w') as f:
     json.dump(new_state, f, indent=1)
 with open('hosting.json', 'w') as f:
