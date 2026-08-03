@@ -94,7 +94,7 @@ def load(today):
         if not r or r[0] is None: continue
         k = mkey(r[0])
         if not k or k < DATA_START or k > cur: continue
-        vin = vin_key(r[12])
+        vin = vin_key(r[9])
         stmts.setdefault(vin, []).append({
             'month': k, 'owner': fix_owner(r[1], vin), 'vehicle': fix_vehicle(r[2], vin),
             'days': num(r[3]), 'revenue': num(r[4]), 'mgmt_fee': num(r[5]),
