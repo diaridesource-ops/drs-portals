@@ -3,19 +3,19 @@
   "vins": [
    "1GT4EBDD9TU600055"
   ],
-  "hash": "f75c995de05160ea"
+  "hash": "2110d97af2723c50"
  },
  "Bryce Powerman": {
   "vins": [
    "4S4WMARD2N3412173"
   ],
-  "hash": "19b1f011cd7f4572"
+  "hash": "4889fd63dc466916"
  },
  "Conor McCluskey": {
   "vins": [
    "1GKS2BKD5NR227335"
   ],
-  "hash": "d6f8b73f9ad472da"
+  "hash": "76c78d9443558085"
  },
  "DIA RideSource": {
   "vins": [
@@ -29,70 +29,75 @@
   "vins": [
    "4S4BSBNC9G3244428"
   ],
-  "hash": "1bdbeefc4952a388"
+  "hash": "f846e22cfcb7e6b6"
  },
  "Ildefanso Garcia": {
   "vins": [
    "3TMLB5JN9TM249039"
   ],
-  "hash": "6cfb67a0e32baaa4"
+  "hash": "d894d8d32e2d1936"
  },
  "Jayson Cahill": {
   "vins": [
    "1GNSKHKC1LR177317",
-   "1GNSKHKC1LR274922",
    "1GNSKHKC3LR187573"
   ],
-  "hash": "ee969d009887773a"
+  "hash": "5345652791168d94"
  },
  "Jen Sen": {
   "vins": [
    "JN8AY3AE8S9403106"
   ],
-  "hash": "3b9447bef6e34491"
+  "hash": "67a0cc89975d52bc"
  },
  "Joel Bowers": {
   "vins": [
    "1C4RJHET1N8536935",
    "WA1VAAF78KD046954"
   ],
-  "hash": "c398f1c547f7a1c3"
+  "hash": "842d1cecb6e9c986"
  },
  "John Rush": {
   "vins": [
    "5LMJJ2LT8KEL17848"
   ],
-  "hash": "16ee8415db0f1a57"
+  "hash": "8309fbb1f79dff41"
  },
  "Lexi Wiedel": {
   "vins": [
    "1FMJU1JTXJEA55997"
   ],
-  "hash": "4f7175474d2ea13f"
+  "hash": "5b46934a57f20bf8"
  },
  "Matthew Moreneault": {
   "vins": [
    "3VVMX7B29PM356816"
   ],
-  "hash": "101fa7add63ecf85"
+  "hash": "aed09c61ae9ac8e7"
  },
  "Matthew Swain": {
   "vins": [
    "1FM5K8D85JGC04084"
   ],
-  "hash": "a7380238d98b4f7c"
+  "hash": "d14e8f5630547bb2"
+ },
+ "Patricia Bolduc": {
+  "vins": [
+   "1GNSKHKC1LR274971"
+  ],
+  "hash": "229bab56dbef3641"
  },
  "Shawn Gardner": {
   "vins": [
    "WA1BAAFY4M2019065"
   ],
-  "hash": "1ed73f73e63f664b"
+  "hash": "1a7d1151e0d81344"
  },
  "Tevs Zibert": {
   "vins": [
    "WBA8D9C58HA003802"
   ],
-  "hash": "eb2ba8e6f275da41"
+  "hash": "6d757254b2bd5557"
  },
  "Zachary Holderness": {
   "vins": [
@@ -100,6 +105,6 @@
    "5LMJJ3LT2KEL19987",
    "JN8AY2BB3M9794635"
   ],
-  "hash": "b1c7f31f406738f2"
+  "hash": "cf42de2988344a8b"
  }
 }
