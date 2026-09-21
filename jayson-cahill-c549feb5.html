@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jayson Cahill — DRS Owner Portal</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0ea5e9">
+<style>
+:root { --ink:#0f172a; --mut:#64748b; --line:#e2e8f0; --bg:#f8fafc; --card:#fff;
+  --brand:#0ea5e9; --brand-dark:#0284c7; --pos:#10b981; --neg:#ef4444; --warn:#f59e0b; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; font:15px/1.6 -apple-system,'Segoe UI',Roboto,sans-serif;
+  color:var(--ink); background:linear-gradient(135deg, var(--bg) 0%, #f0f9ff 100%); min-height:100vh; }
+.wrap { max-width:1000px; margin:0 auto; padding:32px 20px 60px; }
+header { margin-bottom:24px; }
+header h1 { margin:0; font-size:32px; font-weight:700; letter-spacing:-0.5px; }
+header .sub { color:var(--mut); margin-top:4px; font-size:14px; }
+.note { border-radius:12px; padding:14px 16px; margin:16px 0; font-size:14px; border-left:4px solid; }
+.note.amber { background:#fffbeb; border-color:var(--warn); }
+.note.blue { background:#f0f9ff; border-color:var(--brand); }
+.month-selector { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px; margin:20px 0; display:flex; align-items:center; gap:14px; box-shadow:0 1px 2px rgba(0,0,0,.05); }
+.month-selector label { margin:0; font-weight:600; color:var(--ink); }
+.month-selector select { padding:8px 12px; border:2px solid var(--line); border-radius:8px;
+  font-size:14px; background:#fff; color:var(--ink); cursor:pointer; transition:border-color 0.2s; }
+.month-selector select:focus { outline:none; border-color:var(--brand); }
+section.vehicle { background:var(--card); border:1px solid var(--line); border-radius:16px;
+  padding:28px; margin:24px 0; box-shadow:0 2px 8px rgba(0,0,0,.06); transition:box-shadow 0.3s; }
+section.vehicle:hover { box-shadow:0 4px 12px rgba(0,0,0,.08); }
+.vcard { margin-bottom:20px; }
+.vname { font-size:22px; font-weight:700; margin:0; letter-spacing:-0.3px; }
+.vmeta { color:var(--mut); font-size:13px; margin:4px 0 0; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin:20px 0; }
+.kpi { background:linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%); border:1px solid var(--line); border-radius:12px; padding:16px; }
+.klabel { font-size:11px; color:var(--mut); text-transform:uppercase; letter-spacing:0.05em; font-weight:600; }
+.kval { font-size:24px; font-weight:700; margin-top:6px; }
+.ksub { font-size:12px; color:var(--mut); margin-top:4px; }
+h2 { font-size:17px; font-weight:700; margin:28px 0 12px; letter-spacing:-0.3px; }
+table { width:100%; border-collapse:collapse; font-size:14px; }
+th { font-size:12px; color:var(--mut); text-transform:uppercase; letter-spacing:0.05em; font-weight:600; padding:12px; background:#f8fafc; }
+td { padding:12px; border-bottom:1px solid var(--line); }
+td.r, th.r { text-align:right; }
+tr.total td { font-weight:700; border-top:2px solid var(--ink); background:#f8fafc; }
+.pos { color:var(--pos); font-weight:600; } .neg { color:var(--neg); font-weight:600; }
+.calwrap { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+.cal { border:1px solid var(--line); border-radius:12px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,.05); }
+.calhead { background:linear-gradient(135deg, var(--ink) 0%, #1e293b 100%); color:#fff; text-align:center; padding:12px; font-weight:600; font-size:15px; }
+.calgrid { display:grid; grid-template-columns:repeat(7,1fr); gap:1px; padding:8px; background:var(--line); }
+.dow { font-size:11px; color:var(--mut); text-align:center; padding:8px; background:#f8fafc; font-weight:600; }
+.day { aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:12px; background:#fff; border:1px solid var(--line); }
+.day.booked { background:linear-gradient(135deg, #e0f2fe 0%, #cffafe 100%); border-color:var(--brand); font-weight:700; color:var(--brand); }
+.day.today { outline:2px solid var(--brand); outline-offset:-1px; }
+.triplegend { margin-top:14px; display:flex; flex-wrap:wrap; gap:10px; }
+.chip { border:1px solid var(--line); border-radius:20px; padding:6px 14px; font-size:13px; background:#f8fafc; transition:all 0.2s; }
+.dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:8px; }
+footer { color:var(--mut); font-size:12px; margin-top:32px; text-align:center; }
+.bills-section { background:linear-gradient(135deg, #fef3c7 0%, #fef08a 100%); border:1px solid #fcd34d; border-radius:12px; margin:16px 0; overflow:hidden; }
+.bills-header { padding:16px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; }
+.bills-header h3 { margin:0; font-size:16px; color:var(--ink); }
+.toggle-icon { font-size:24px; font-weight:300; color:var(--ink); transition:transform 0.3s; }
+.bills-content { padding:16px; max-height:2000px; overflow:visible; }
+.bills-content.collapsed { max-height:0; padding:0; overflow:hidden; }
+.bills-desc { color:var(--mut); font-size:14px; margin:0 0 16px; }
+.bills-container { border-top:1px solid rgba(0,0,0,.1); padding-top:16px; }
+.bill-entry { background:#fffbeb; border:1px solid #fed7aa; border-radius:10px; padding:14px; margin-bottom:12px; }
+.entry-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-weight:600; }
+.btn-remove { padding:4px 10px; background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; border-radius:6px; font-size:12px; cursor:pointer; transition:all 0.2s; }
+.btn-remove:hover { background:#fecaca; }
+.btn-add-bill { grid-column:1/-1; padding:10px 16px; background:#fff; border:2px dashed var(--warn); color:var(--ink); border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; margin-top:12px; }
+.btn-add-bill:hover { background:#fffbeb; }
+.blackout-section { background:linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border:1px solid #bfdbfe; border-radius:12px; padding:16px; margin:16px 0; }
+.blackout-section h3 { margin:0 0 8px; font-size:16px; color:var(--ink); }
+.blackout-desc { color:var(--mut); font-size:14px; margin:0 0 16px; }
+.blackout-form, .bills-form { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; }
+.form-group { display:flex; flex-direction:column; }
+.form-group.full-width { grid-column:1/-1; }
+.form-group label { font-size:13px; font-weight:600; margin-bottom:6px; color:var(--ink); }
+.form-group input, .form-group select, .form-group textarea { padding:10px 12px; border:1.5px solid var(--line); border-radius:8px; font-size:14px; transition:all 0.2s; font-family:inherit; }
+.form-group select { background:#fff; color:var(--ink); }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline:none; border-color:var(--brand); box-shadow:0 0 0 3px rgba(14,165,233,.1); }
+.radio-group { display:flex; flex-direction:column; gap:10px; }
+.radio-label { display:flex; align-items:center; gap:8px; cursor:pointer; font-size:14px; }
+.radio-label input { margin:0; cursor:pointer; }
+.btn-submit { grid-column:1/-1; padding:12px 20px; background:linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%); color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:600; cursor:pointer; transition:all 0.3s; box-shadow:0 2px 4px rgba(14,165,233,.2); }
+.btn-submit:hover { transform:translateY(-2px); box-shadow:0 4px 8px rgba(14,165,233,.3); }
+.btn-submit:active { transform:translateY(0); }
+.bill-result { grid-column:1/-1; margin-top:12px; padding:14px; background:#fff; border:1px solid var(--line); border-radius:8px; display:none; border-left:4px solid var(--brand); }
+.bill-result.show { display:block; }
+.bill-result.success { background:#f0fdf4; border-left-color:var(--pos); }
+.bill-result.error { background:#fef2f2; border-left-color:var(--neg); }
+.email-template { background:#f8fafc; padding:14px; border-radius:8px; border:1px solid var(--line); font-family:'Courier New',monospace; font-size:12px; line-height:1.6; color:var(--ink); max-height:240px; overflow-y:auto; }
+@media print { body { background:#fff; } section.vehicle { box-shadow:none; } }
+@media (max-width:768px) { .blackout-form, .bills-form { grid-template-columns:1fr; } .btn-submit { grid-column:auto; } .kpis { grid-template-columns:1fr; } header h1 { font-size:24px; } }
+</style></head><body><div class="wrap">
+<header><h1>Jayson Cahill</h1>
+<div class="sub">DIA RideSource · Owner Portal · generated 9/21/2026</div></header>
+<div class="note amber"><b>Manager's note:</b> Welcome to the Owner Portal! This is a work in
+progress, but this is a nice starter. My goal is to have this automatically update daily.</div>
+
+<section class="vehicle">
+  <div class="vcard">
+    <div><div class="vname">White 2020 Chevrolet Suburban</div>
+    <div class="vmeta">VIN 1GNSKHKC3LR187573 &nbsp;·&nbsp; Revenue split 70% owner / 30% DRS</div></div>
+  </div>
+  <h2>Submit Bills/Tickets Received</h2>
+  
+  <div class="bills-section">
+    <div class="bills-header" onclick="toggleBillsForm('1GNSKHKC3LR187573')">
+      <h3>Submit Bills/Tickets Received</h3>
+      <span class="toggle-icon" id="toggle-1GNSKHKC3LR187573">+</span>
+    </div>
+    <div id="bills-content-1GNSKHKC3LR187573" class="bills-content">
+      <p class="bills-desc">Received a bill, ticket, or invoice related to this vehicle? Submit it here with details. You'll need to attach a PDF of the bill(s) when you email.</p>
+      <div id="bills-container-1GNSKHKC3LR187573">
+        <div class="bill-entry" data-entry="0">
+          <div class="entry-header">
+            <span>Bill/Ticket #1</span>
+            <button type="button" onclick="removeBillEntry(this, '1GNSKHKC3LR187573')" class="btn-remove">Remove</button>
+          </div>
+          <div class="bills-form">
+            <div class="form-group">
+              <label>Bill Type:</label>
+              <select class="bill-type">
+                <option value="">-- Select Type --</option>
+                <option value="Parking Ticket">Parking Ticket</option>
+                <option value="Traffic Ticket">Traffic Ticket</option>
+                <option value="Tow/Impound">Tow/Impound</option>
+                <option value="Repair Bill">Repair Bill</option>
+                <option value="Maintenance">Maintenance</option>
+                <option value="Insurance Claim">Insurance Claim</option>
+                <option value="Toll/Fee">Toll/Fee</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Date of Bill/Incident:</label>
+              <input type="date" class="bill-date">
+            </div>
+            <div class="form-group">
+              <label>Amount (if known):</label>
+              <input type="text" class="bill-amount" placeholder="e.g., $150.00">
+            </div>
+            <div class="form-group">
+              <label>Description:</label>
+              <textarea class="bill-description" placeholder="Briefly describe the bill/ticket/incident..." rows="2"></textarea>
+            </div>
+            <div class="form-group full-width">
+              <label>Payment Status:</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="status-1GNSKHKC3LR187573" class="bill-status" value="paid">
+                  <span>I paid this bill on time, receipt attached, reimbursement requested</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="status-1GNSKHKC3LR187573" class="bill-status" value="unpaid">
+                  <span>I have not paid this bill (due date within 14 days)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" onclick="addBillEntry('1GNSKHKC3LR187573')" class="btn-add-bill">+ Add Another Bill</button>
+      <button onclick="generateMultipleBillEmails('1GNSKHKC3LR187573', 'White 2020 Chevrolet Suburban', 'Jayson Cahill')" class="btn-submit" style="margin-top:16px;">Generate Email Submission</button>
+    </div>
+    <div id="bill-result-1GNSKHKC3LR187573" class="bill-result"></div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="klabel">Most Recent Statement (9/2026)</div>
+      <div class="kval ">—</div></div>
+    <div class="kpi"><div class="klabel">Revenue since 6/2026</div><div class="kval">$0.00</div></div>
+    <div class="kpi"><div class="klabel">Upcoming trips</div><div class="kval">0</div>
+      <div class="ksub">$0.00 revenue subject to split</div></div>
+  </div>
+  <h2>Payout Statements</h2>
+  <div class="note blue"><b>Notes:</b><br>
+  If expenses exceed the payout amount, an invoice will come via email. Negative balances will
+  no longer roll over.<br>
+  Outstanding invoices (vendors, insurance, etc.) must be paid before receiving monthly payouts.</div>
+  <table class="stmt-table"><thead><tr><th>Month</th><th class="r">Days</th><th class="r">Revenue</th><th class="r">Mgmt Fee</th><th class="r">Adjustments</th><th class="r">Operating Expenses</th><th class="r">Owner Payout</th></tr></thead><tbody></tbody></table>
+  <h2>Expenses</h2>
+  <p class="muted">No expenses recorded for this period.</p>
+  <h2>Request Blackout Dates</h2>
+  
+  <div class="blackout-section">
+    <h3>Request Blackout Dates</h3>
+    <p class="blackout-desc">Need to block dates for personal use? Select the date range below and submit a request to your manager.</p>
+    <div class="blackout-form">
+      <div class="form-group">
+        <label for="blackout-start-1GNSKHKC3LR187573">From date:</label>
+        <input type="date" id="blackout-start-1GNSKHKC3LR187573" class="blackout-start">
+      </div>
+      <div class="form-group">
+        <label for="blackout-end-1GNSKHKC3LR187573">To date:</label>
+        <input type="date" id="blackout-end-1GNSKHKC3LR187573" class="blackout-end">
+      </div>
+      <div class="form-group">
+        <label for="blackout-reason-1GNSKHKC3LR187573">Reason (optional):</label>
+        <input type="text" id="blackout-reason-1GNSKHKC3LR187573" class="blackout-reason" placeholder="e.g., Personal trip, maintenance, etc.">
+      </div>
+      <button onclick="generateBlackoutEmail('1GNSKHKC3LR187573', 'White 2020 Chevrolet Suburban', 'Jayson Cahill')" class="btn-submit">Generate Email Request</button>
+    </div>
+    <div id="blackout-result-1GNSKHKC3LR187573" class="blackout-result"></div>
+  </div>
+  <h2>Upcoming Bookings</h2>
+  <p class="muted">No upcoming trips currently booked.</p>
+</section>
+<footer>DIA RideSource, LLC · Questions? diaridesource@gmail.com</footer>
+</div>
+
+<script>
+function filterMonths(selectedMonth) {
+  const rows = document.querySelectorAll('.stmt-row, .exp-row');
+  rows.forEach(row => {
+    if (selectedMonth === 'all') {
+      row.style.display = '';
+    } else {
+      const rowMonth = row.getAttribute('data-month');
+      row.style.display = rowMonth === selectedMonth ? '' : 'none';
+    }
+  });
+}
+
+function generateBlackoutEmail(vinClean, vehicleName, ownerName) {
+  const startEl = document.getElementById('blackout-start-' + vinClean);
+  const endEl = document.getElementById('blackout-end-' + vinClean);
+  const reasonEl = document.getElementById('blackout-reason-' + vinClean);
+  const resultEl = document.getElementById('blackout-result-' + vinClean);
+
+  const startDate = startEl.value;
+  const endDate = endEl.value;
+  const reason = reasonEl.value || 'Not specified';
+
+  if (!startDate || !endDate) {
+    resultEl.textContent = 'Please select both a start and end date.';
+    resultEl.className = 'blackout-result show error';
+    return;
+  }
+
+  // Parse and validate dates
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  if (start > end) {
+    resultEl.textContent = 'Start date must be before end date.';
+    resultEl.className = 'blackout-result show error';
+    return;
+  }
+
+  // Format dates for display
+  const options = { month: 'short', day: 'numeric', year: 'numeric' };
+  const startFormatted = start.toLocaleDateString('en-US', options);
+  const endFormatted = end.toLocaleDateString('en-US', options);
+
+  const emailSubject = `Blackout Date Request: ${vehicleName}`;
+  const emailBody = `Hi Lindsey,
+
+I would like to request blackout dates for the following vehicle:
+
+Vehicle: ${vehicleName}
+Owner: ${ownerName}
+Dates Requested: ${startFormatted} to ${endFormatted}
+Reason: ${reason}
+
+Please let me know if these dates can be blocked for personal use.
+
+Thank you!`;
+
+  // Show email template
+  const emailTemplate = `To: diaridesource@gmail.com
+Subject: ${emailSubject}
+
+${emailBody}`;
+
+  resultEl.innerHTML = `<strong>Email Request Generated:</strong><div class="email-template">${emailTemplate.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div><p style="margin-top:8px; font-size:12px;"><strong>Next step:</strong> Copy the email above and send it to your manager, or click the button below to open your email client.</p><button onclick="copyToClipboard('${emailTemplate.replace(/'/g, "\\'")}')" style="padding:6px 12px; margin-right:8px; background:var(--brand); color:#fff; border:none; border-radius:4px; cursor:pointer;">Copy Email</button><a href="mailto:diaridesource@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}" style="display:inline-block; padding:6px 12px; background:var(--brand); color:#fff; text-decoration:none; border-radius:4px; cursor:pointer;">Open Email</a>`;
+  resultEl.className = 'blackout-result show success';
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Email template copied to clipboard!');
+  }).catch(() => {
+    alert('Could not copy. Please copy manually from the template above.');
+  });
+}
+
+function toggleBillsForm(vinClean) {
+  const content = document.getElementById('bills-content-' + vinClean);
+  const toggle = document.getElementById('toggle-' + vinClean);
+  content.classList.toggle('collapsed');
+  toggle.textContent = content.classList.contains('collapsed') ? '+' : '−';
+}
+
+function addBillEntry(vinClean) {
+  const container = document.getElementById('bills-container-' + vinClean);
+  const entries = container.querySelectorAll('.bill-entry');
+  const nextNum = entries.length + 1;
+
+  const newEntry = document.createElement('div');
+  newEntry.className = 'bill-entry';
+  newEntry.dataset.entry = nextNum;
+  newEntry.innerHTML = `
+    <div class="entry-header">
+      <span>Bill/Ticket #${nextNum}</span>
+      <button type="button" onclick="removeBillEntry(this, '${vinClean}')" class="btn-remove">Remove</button>
+    </div>
+    <div class="bills-form">
+      <div class="form-group">
+        <label>Bill Type:</label>
+        <select class="bill-type">
+          <option value="">-- Select Type --</option>
+          <option value="Parking Ticket">Parking Ticket</option>
+          <option value="Traffic Ticket">Traffic Ticket</option>
+          <option value="Tow/Impound">Tow/Impound</option>
+          <option value="Repair Bill">Repair Bill</option>
+          <option value="Maintenance">Maintenance</option>
+          <option value="Insurance Claim">Insurance Claim</option>
+          <option value="Toll/Fee">Toll/Fee</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Date of Bill/Incident:</label>
+        <input type="date" class="bill-date">
+      </div>
+      <div class="form-group">
+        <label>Amount (if known):</label>
+        <input type="text" class="bill-amount" placeholder="e.g., $150.00">
+      </div>
+      <div class="form-group">
+        <label>Description:</label>
+        <textarea class="bill-description" placeholder="Briefly describe the bill/ticket/incident..." rows="2"></textarea>
+      </div>
+      <div class="form-group full-width">
+        <label>Payment Status:</label>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" name="status-${vinClean}" class="bill-status" value="paid">
+            <span>I paid this bill on time, receipt attached, reimbursement requested</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="status-${vinClean}" class="bill-status" value="unpaid">
+            <span>I have not paid this bill (due date within 14 days)</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  `;
+  container.appendChild(newEntry);
+}
+
+function removeBillEntry(btn, vinClean) {
+  const entries = document.querySelectorAll('#bills-container-' + vinClean + ' .bill-entry');
+  if (entries.length > 1) {
+    btn.closest('.bill-entry').remove();
+    renumberBillEntries(vinClean);
+  } else {
+    alert('You must have at least one bill entry.');
+  }
+}
+
+function renumberBillEntries(vinClean) {
+  const container = document.getElementById('bills-container-' + vinClean);
+  const entries = container.querySelectorAll('.bill-entry');
+  entries.forEach((entry, idx) => {
+    entry.dataset.entry = idx;
+    entry.querySelector('.entry-header span').textContent = `Bill/Ticket #${idx + 1}`;
+  });
+}
+
+function generateMultipleBillEmails(vinClean, vehicleName, ownerName) {
+  const container = document.getElementById('bills-container-' + vinClean);
+  const entries = container.querySelectorAll('.bill-entry');
+  const resultEl = document.getElementById('bill-result-' + vinClean);
+
+  if (entries.length === 0) {
+    resultEl.textContent = 'Please add at least one bill.';
+    resultEl.className = 'bill-result show error';
+    return;
+  }
+
+  let billsData = [];
+  let isValid = true;
+
+  entries.forEach((entry, idx) => {
+    const typeEl = entry.querySelector('.bill-type');
+    const dateEl = entry.querySelector('.bill-date');
+    const amountEl = entry.querySelector('.bill-amount');
+    const descEl = entry.querySelector('.bill-description');
+    const statusEl = entry.querySelector('input[name="status-' + vinClean + '"]:checked');
+
+    if (!typeEl.value) {
+      resultEl.textContent = `Bill #${idx + 1}: Please select a bill type.`;
+      resultEl.className = 'bill-result show error';
+      isValid = false;
+      return;
+    }
+    if (!dateEl.value) {
+      resultEl.textContent = `Bill #${idx + 1}: Please enter a date.`;
+      resultEl.className = 'bill-result show error';
+      isValid = false;
+      return;
+    }
+    if (!descEl.value.trim()) {
+      resultEl.textContent = `Bill #${idx + 1}: Please provide a description.`;
+      resultEl.className = 'bill-result show error';
+      isValid = false;
+      return;
+    }
+    if (!statusEl) {
+      resultEl.textContent = `Bill #${idx + 1}: Please select a payment status.`;
+      resultEl.className = 'bill-result show error';
+      isValid = false;
+      return;
+    }
+
+    const date = new Date(dateEl.value);
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    const dateFormatted = date.toLocaleDateString('en-US', options);
+
+    const statusText = statusEl.value === 'paid'
+      ? 'PAID - Receipt attached, reimbursement requested'
+      : 'NOT PAID - Due within 14 days';
+
+    billsData.push({
+      type: typeEl.value,
+      date: dateFormatted,
+      amount: amountEl.value || 'Not specified',
+      description: descEl.value,
+      status: statusText
+    });
+  });
+
+  if (!isValid) return;
+
+  let billsList = '';
+  billsData.forEach((bill, idx) => {
+    billsList += `Bill #${idx + 1}: ${bill.type}
+  Date: ${bill.date}
+  Amount: ${bill.amount}
+  Status: ${bill.status}
+  Description: ${bill.description}
+
+`;
+  });
+
+  const emailSubject = `Bill/Ticket Submission (${billsData.length} bill${billsData.length > 1 ? 's' : ''}) - ${vehicleName}`;
+  const emailBody = `Hi,
+
+I'm submitting ${billsData.length} bill/ticket${billsData.length > 1 ? 's' : ''} received for the following vehicle:
+
+Owner: ${ownerName}
+Vehicle: ${vehicleName}
+
+${billsList}
+I'm attaching PDFs of the bill(s) to this email.
+
+Thank you!`;
+
+  const emailTemplate = `To: manager@coloradocarshare.net
+Subject: ${emailSubject}
+
+${emailBody}
+---
+Note: Please attach the PDF(s) of the bill(s) to your email before sending.`;
+
+  resultEl.innerHTML = `<strong>✓ Email Template Generated</strong><div class="email-template" style="margin-top:10px;">${emailTemplate.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div><p style="margin-top:12px; font-size:13px;"><strong>Next step:</strong> Copy the email template and paste it into your email client. Attach the PDF(s), then send to your manager.</p><button onclick="copyToClipboard('${emailTemplate.replace(/'/g, "\\'")}')" style="padding:8px 14px; margin-right:8px; background:var(--brand); color:#fff; border:none; border-radius:6px; font-weight:600; cursor:pointer;">Copy Email</button><a href="mailto:manager@coloradocarshare.net?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}" style="display:inline-block; padding:8px 14px; background:var(--brand); color:#fff; text-decoration:none; border-radius:6px; font-weight:600;">Open Email</a>`;
+  resultEl.className = 'bill-result show success';
+}
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js').catch(err => console.log('SW registration failed:', err));
+}
+</script>
+</body></html>
